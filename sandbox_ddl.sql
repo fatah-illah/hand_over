@@ -647,6 +647,36 @@ CREATE TABLE IF NOT EXISTS "sandbox"."tb_sand_user_points" (
 CREATE INDEX IF NOT EXISTS "tb_sand_user_points_user_id_idx" ON "sandbox"."tb_sand_user_points"("user_id");
 CREATE INDEX IF NOT EXISTS "tb_sand_user_points_reg_dttm_idx" ON "sandbox"."tb_sand_user_points"("reg_dttm");
 
+CREATE TABLE IF NOT EXISTS "sandbox"."tb_sand_email_tracking" (
+  "seq" INTEGER NOT NULL,
+  "user_id" VARCHAR REFERENCES "sandbox"."tb_sand_user_base"("user_id"),
+  "email_address" VARCHAR,
+  "type" VARCHAR,
+  "status" VARCHAR,
+  "error_message" TEXT,
+  "response_code" VARCHAR,
+  "attempt_count" INTEGER DEFAULT 1,
+  "message_id" VARCHAR,
+  "sent_at" BIGINT,
+  "last_attempt_at" BIGINT,
+  "metadata" JSONB,
+  "attr1" VARCHAR,
+  "attr2" VARCHAR,
+  "attr3" VARCHAR,
+  "attr4" VARCHAR,
+  "attr5" VARCHAR,
+  "reg_by" VARCHAR,
+  "reg_dttm" BIGINT,
+  "upd_by" VARCHAR,
+  "upd_dttm" BIGINT,
+  "is_deleted" BOOLEAN DEFAULT false NOT NULL,
+  CONSTRAINT "tb_sand_email_tracking_pkey" PRIMARY KEY ("user_id", "seq")
+);
+CREATE INDEX IF NOT EXISTS "tb_sand_email_tracking_upd_dttm_idx" ON "sandbox"."tb_sand_email_tracking"("upd_dttm");
+CREATE INDEX IF NOT EXISTS "tb_sand_email_tracking_user_id_idx" ON "sandbox"."tb_sand_email_tracking"("user_id");
+CREATE INDEX IF NOT EXISTS "tb_sand_email_tracking_sent_at_idx" ON "sandbox"."tb_sand_email_tracking"("sent_at");
+CREATE INDEX IF NOT EXISTS "tb_sand_email_tracking_type_idx" ON "sandbox"."tb_sand_email_tracking"("type");
+
 -- Function for clear format
 CREATE OR REPLACE FUNCTION "sandbox".clean_csv_format(input_text TEXT) 
 RETURNS TEXT AS $$

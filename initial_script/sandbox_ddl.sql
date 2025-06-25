@@ -174,6 +174,31 @@ CREATE TABLE IF NOT EXISTS "sandbox"."tb_sand_login_attempt" (
 );
 CREATE INDEX IF NOT EXISTS "tb_sand_login_attempt_upd_dttm_idx" ON "sandbox"."tb_sand_login_attempt"("upd_dttm");
 
+CREATE TABLE IF NOT EXISTS "sandbox"."tb_sand_login_streak" (
+  "seq" INTEGER NOT NULL,
+  "user_id" VARCHAR NOT NULL REFERENCES "sandbox"."tb_sand_user_base"("user_id"),
+  "event_dttm" BIGINT,
+  "event_type" VARCHAR,
+  "current_streak" INTEGER,
+  "longest_streak" INTEGER,
+  "previous_streak" INTEGER,
+  "last_successful_ip" VARCHAR,
+  "last_user_agent" TEXT,
+  "note" TEXT,
+  "attr1" VARCHAR,
+  "attr2" VARCHAR,
+  "attr3" VARCHAR,
+  "attr4" VARCHAR,
+  "attr5" VARCHAR,
+  "reg_by" VARCHAR,
+  "reg_dttm" BIGINT,
+  "upd_by" VARCHAR,
+  "upd_dttm" BIGINT,
+  "is_deleted" BOOLEAN DEFAULT false NOT NULL,
+  CONSTRAINT "tb_sand_login_streak_pkey" PRIMARY KEY ("seq", "user_id")
+);
+CREATE INDEX IF NOT EXISTS "tb_sand_login_streak_upd_dttm_idx" ON "sandbox"."tb_sand_login_streak"("upd_dttm");
+
 CREATE TABLE IF NOT EXISTS "sandbox"."tb_sand_group_category" (
   "group_cat" VARCHAR PRIMARY KEY,
   "description" TEXT,
